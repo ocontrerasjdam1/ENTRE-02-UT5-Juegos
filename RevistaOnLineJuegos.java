@@ -52,10 +52,12 @@ public class RevistaOnLineJuegos
         else if(existeJuego(juego.getTitulo()) <= total){
             System.out.println("El juego ya esta añadido a la lista");
         }
-        // else{
-            // System.arraycopy(_src_, _srcPos_, _dest_, _destPos_, total - 1)
-        // }
+        else{
+             juegos[total] = juego;
+            total++;
+        }
     }
+
 
     /**
      * Efectúa una búsqueda en el array del juego cuyo titulo se
@@ -72,16 +74,17 @@ public class RevistaOnLineJuegos
         return -1;
     }
 
-    /**
-     * Representación textual de la revista
-     * Utiliza StringBuilder como clase de apoyo.
-     * Se incluye el nombre de la  revista on-line.
-     * (Ver resultados de ejecución)
-     */
-    public String toString() {
+    // /**
+     // * Representación textual de la revista
+     // * Utiliza StringBuilder como clase de apoyo.
+     // * Se incluye el nombre de la  revista on-line.
+     // * (Ver resultados de ejecución)
+     // */
+    // public String toString() {
 
-        return "";
-    }
+        // return "";
+    // }
+
     /**
      *  Se puntúa el juego de título indicado con 
      *  la puntuación recibida como parámetro. 
@@ -89,13 +92,13 @@ public class RevistaOnLineJuegos
      *  Si el juego no existe se muestra un mensaje en pantalla
      */
     public void puntuar(String titulo, int puntuacion) {
-        
+
         int posicion = existeJuego(titulo);
         if(existeJuego(titulo) == -1){
             System.out.println("El juego no existe.");
         }
         else{
-           juegos[posicion].puntuar(puntuacion);
+            juegos[posicion].puntuar(puntuacion);
         }
     }
 
@@ -106,9 +109,23 @@ public class RevistaOnLineJuegos
      * El array se devuelve todo en mayúsculas y ordenado ascendentemente
      */
     public String[] valoracionMayorQue(double valoracion) {
-
-        return null;
+        int media = 0;
+        for (int i = 0; i < total; i++) {
+            if (juegos[i].getValoracionMedia() > valoracion) {
+                media++;
+            }
+        }
+        String[] array = new String[media];
+        int pos = 0;
+        for (int i = 0; i < total; i++) {
+            if (juegos[i].getValoracionMedia() > valoracion) {
+                array[pos] = juegos[i].getTitulo();
+                pos++;
+            }
+        }
+        return array;
     }
+
     /**
      * Borrar los juegos del género indicado devolviendo
      * el nº de juegos borradas
@@ -120,7 +137,7 @@ public class RevistaOnLineJuegos
                 juegos[i - 1] = juegos[i];
                 borrados++;
             }
-        
+
         }
         return borrados;
     }
